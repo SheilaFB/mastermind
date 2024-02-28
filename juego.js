@@ -37,12 +37,20 @@ function crearFilaPartida(){
 function comprobarIntento(arrayTirada){
     numIntento++;
     intentos.set(numIntento,arrayTirada);
-    console.log('Numero intento ' + intentos.size)
-    arrayTirada.forEach(function(element) {
-        if(combinacion.includes(element)){
+    console.log('Numero intento ' + intentos.size);
+    for (let i = 0; i < nivel; i++) {
+        if(combinacion.includes(arrayTirada[i])){
             console.log('Está en la combiacion')
+            if(combinacion[i] === arrayTirada[i]){
+                console.log('Y además has acertado')
+            }
         }else {
             console.log('No está en la combinación')
-        }
+        }  
+    }
+
+
+    arrayTirada.forEach(function(element) {
+        
     });
 }
