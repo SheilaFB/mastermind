@@ -3,9 +3,12 @@ var nivel = recibirParametros.get('niv');
 var colores = recibirParametros.get('col');
 console.log('NIVEL: ' + nivel);
 console.log('COLORES: ' + colores);
+
+var numIntento = 0;
 let arrayColores = new Map();
 let intentos = new Map();
 let combinacion = crearCombinacion();
+comprobarIntento([6,5,3,2]);
 
 arrayColores.set(1,'#ff6961');
 arrayColores.set(2,'#08cad1');
@@ -31,6 +34,15 @@ function crearFilaPartida(){
 
 }
 
-function comprobarIntento(){
-
+function comprobarIntento(arrayTirada){
+    numIntento++;
+    intentos.set(numIntento,arrayTirada);
+    console.log('Numero intento ' + intentos.size)
+    arrayTirada.forEach(function(element) {
+        if(combinacion.includes(element)){
+            console.log('Está en la combiacion')
+        }else {
+            console.log('No está en la combinación')
+        }
+    });
 }
