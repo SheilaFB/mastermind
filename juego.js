@@ -1,8 +1,14 @@
 //NECESITO CREAR UN CONTADOR DE INTENTOS. CON ESTE CONTADOR ACCEDO A FILA NO MÉTODO COMPROBAR
 
 var recibirParametros = new URLSearchParams(window.location.search);
-var nivel = recibirParametros.get('niv');
+if(recibirParametros.get('niv')==null) {
+   var nivel = 4;
+} else {
+    var nivel = recibirParametros.get('niv');
+}
+
 var colores = recibirParametros.get('col');
+var permitirDuplicados = parseInt(recibirParametros.get('per'));
 console.log('NIVEL: ' + nivel);
 console.log('COLORES: ' + colores);
 
@@ -38,9 +44,15 @@ mapColores.set(6,'#ffb480');
 mapColores.set(7,'#c780e8');
 mapColores.set(8,'#59adf6');
 
+if((nivel==4||nivel==6) && (colores==6 || colores==8) && (permitirDuplicados==0 || permitirDuplicados==1)){
 crearOpciones();
 crearPartida();
-
+} else {
+    let contenedorError = document.getElementById('contenedor');
+    let error = document.createElement('h1');
+    error.innerHTML='404. NOT FOUND';
+    contenedorError.appendChild(error);
+}
 
 //Método para crear los botones para escoger los colores de la tirada
 function crearOpciones(){
@@ -71,11 +83,22 @@ function crearOpciones(){
 function crearCombinacion(){
     console.log('*****Combinación correcta******')
     let comb = [];
-    for (let i = 0; i < nivel; i++) {
+    while (comb.length!=nivel) {
         colorAleatorio = Math.floor(Math.random()*colores)+1;
-        comb.push(colorAleatorio); 
+        if (permitirDuplicados == 1){
+            console.log('Entra igualmente')
+            comb.push(colorAleatorio); 
+        } else {
+            if (!comb.includes(colorAleatorio)){
+                console.log('No estoy repe')
+                comb.push(colorAleatorio); 
+            }else {
+                console.log('Estoy repe')
+            }
+        }
         console.log(colorAleatorio)
     }
+    console.log(comb);
     console.log('*************************')
     return comb;
 }

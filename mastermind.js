@@ -1,22 +1,6 @@
 var nivel=4;
-var color=4;
-
-function comprobarCheckbox(checkbox) {
-    var checkboxes = document.getElementsByName('color');
-    var cantidad = 0;
-    checkboxes.forEach(function (cb) {
-        if (cb !== checkbox) {
-            cb.checked = false;
-        }
-        if (cb.checked){
-            cantidad++;
-        }
-
-        if (cantidad === 0){
-            checkbox.checked = true;
-        }
-    });
-}
+var color=6;
+var permitir = 0;
 
 function seleccionarNivel(val){
     nivel=val;
@@ -33,5 +17,11 @@ function seleccionarColores(color){
 }
 
 function empezarJuego(){
-    window.location.href = "juego.html?niv=" + encodeURIComponent(nivel) + "&col=" + encodeURIComponent(color);
+    let cb = document.getElementById('cbDuplicar');
+
+    if (cb.checked){
+        permitir = 1;
+    }
+
+    window.location.href = "juego.html?niv=" + encodeURIComponent(nivel) + "&col=" + encodeURIComponent(color) + "&per=" + encodeURIComponent(permitir);
 }
