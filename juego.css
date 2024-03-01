@@ -1,3 +1,8 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+
 #botonesOpciones button:active{
 border: 2px solid yellow;
 box-shadow: 0 0 10px yellow;
@@ -8,6 +13,34 @@ box-shadow: 0 0 10px yellow;
     box-shadow: 0 0 10px yellow;
 }
 
-#contenedor{
-    display: flex !important;
+.grid4{
+    display: grid;
+    grid-template-columns: 10px 10px;
+    gap: 5px;
+}
+
+.grid6{
+    display: grid;
+    grid-template-columns: 10px 10px 10px;
+    gap: 5px;
+}
+
+.grid8{
+    display: grid;
+    grid-template-columns: 10px 10px 10px 10px;
+    grid-gap: 5px;
+}
+
+.aciertos{
+    background-color: gray;
+    border-radius: 10px;
+}
+
+.fila{
+    margin: 20px;
+
+}
+
+.fila div {
+    margin-right: 30px;
 }

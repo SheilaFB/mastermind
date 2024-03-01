@@ -20,10 +20,15 @@ function comprobarCheckbox(checkbox) {
 
 function seleccionarNivel(val){
     nivel=val;
+    if (nivel === 4){
+        color=6;
+    } else {
+        color=8;
+    }
 }
 
 function seleccionarColores(color){
-    color=color;
+    self.color=color;
     console.log(color);
 }
 
