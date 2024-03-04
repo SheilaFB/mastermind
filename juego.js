@@ -12,8 +12,6 @@ var permitirDuplicados = parseInt(recibirParametros.get('per'));
 console.log('NIVEL: ' + nivel);
 console.log('COLORES: ' + colores);
 
-
-
 //Número del intento
 var numIntentoParaArray = 0;
 
@@ -34,6 +32,9 @@ var colorPintar=0;
 
 //contadorIntento
 var contadorIntento = 0;
+
+//boleano para partida ganada;
+var partidaGanada = false;
 
 mapColores.set(1,'#ff6961');
 mapColores.set(2,'#08cad1');
@@ -120,8 +121,10 @@ function crearFilaPartida(numFila){
     fila.classList.add("fila");
     fila.style.display="flex";
     contenedorBotones.id="contenedorBotones"+numFila;
-    contenedorComprobarYaciertos = document.createElement("div");
+    let contenedorComprobarYaciertos = document.createElement("div");
     contenedorComprobarYaciertos.id = "contenedorComprobarYaciertos"+numFila;
+    let informacionPartida = document.createElement('div');
+    informacionPartida.id='info';
     //botones del contenedor, dependenderá del nivel
     for(let i = 0; i < nivel; i++){
         let boton=document.createElement("button");
@@ -143,8 +146,37 @@ function crearFilaPartida(numFila){
         });    
         contenedorBotones.appendChild(boton);
     }
+
+    //Contenedor contenedorComprobarYaciertos.
+
+    let inicial = document.createElement('div');
+    
+    inicial.style.backgroundColor='#CFCFCF';
+    inicial.style.width='80px';
+    inicial.style.height='100%';
+    inicial.style.borderRadius='10px';
+    
+
+    contenedor.appendChild(fila);
+    fila.appendChild(contenedorBotones);
+    fila.appendChild(contenedorComprobarYaciertos).appendChild(inicial);
+    contenedor.appendChild(informacionPartida);
+
+    if (numFila==0){
+        mostrarBotonComprobar('contenedorComprobarYaciertos'+contadorIntento);
+    }
+}
+
+function mostrarBotonComprobar(contenedorMostrarBoton){
+    console.log(contenedorMostrarBoton);
+    var contenedorActual = document.getElementById(contenedorMostrarBoton);
+    contenedorActual.innerHTML="";
     let botonComprobar = document.createElement("button");
     botonComprobar.innerHTML="Comprobar"
+    botonComprobar.style.height='100%';
+    botonComprobar.style.width='80px';
+    botonComprobar.style.borderRadius='10px';
+    botonComprobar.style.border='0';
 
     var tiradaActual= []
 
@@ -159,22 +191,27 @@ function crearFilaPartida(numFila){
     //console.log('TiradaActual: ' + tiradaActual);
     let aciertos = comprobarIntento(tiradaActual);
     mostrarAciertos("contenedorComprobarYaciertos"+contadorIntento, aciertos);
-    if(hasGanado(combinacion,tiradaActual)){
-        finDelJuego();
-    }
-    contadorIntento++;
-    
-    });
 
-    contenedor.appendChild(fila);
-    fila.appendChild(contenedorBotones);
-    fila.appendChild(contenedorComprobarYaciertos).appendChild(botonComprobar);
+    contadorIntento++;
+    if (contadorIntento<7 && !hasGanado(combinacion,tiradaActual)){
+    mostrarBotonComprobar("contenedorComprobarYaciertos"+contadorIntento);
+    }  
+
+    if (partidaGanada){
+        let partidaGanada = document.createElement('div');
+        let felicitacion = document.createElement('h1');
+        felicitacion.innerHTML='FELICIDADES, HAS GANADO';
+        let cont = document.getElementById('info');
+        cont.appendChild(partidaGanada).appendChild(felicitacion);
+        
+    }
+
+    });
+    contenedorActual.appendChild(botonComprobar);
 }
 
 
 function mostrarAciertos(contenedorMostrarAciertos, aciertosMostrar){
-
-
     var contenedorActual = document.getElementById(contenedorMostrarAciertos);
     contenedorActual.innerHTML="";
     contenedorActual.classList.add('grid'+nivel,'aciertos');
@@ -245,5 +282,6 @@ function comprobarIntento(arrayTirada){
 }
 
 function hasGanado(array1,array2){
+    partidaGanada=true;
     return array1.every((valor, index) => valor ===array2[index]);
 }

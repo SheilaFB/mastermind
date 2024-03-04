@@ -16,24 +16,31 @@ box-shadow: 0 0 10px yellow;
 .grid4{
     display: grid;
     grid-template-columns: 10px 10px;
-    gap: 5px;
+    grid-template-rows: 10px 10px;
+    column-gap: 10px;
+    row-gap: 7px;
 }
 
 .grid6{
     display: grid;
     grid-template-columns: 10px 10px 10px;
-    gap: 5px;
+    grid-template-rows: 10px 10px;
+    column-gap: 10px;
+    row-gap: 7px;
 }
 
 .grid8{
     display: grid;
     grid-template-columns: 10px 10px 10px 10px;
-    grid-gap: 5px;
+    grid-gap: 7px;
 }
 
 .aciertos{
-    background-color: gray;
+    justify-content: center;
+    align-content: center;
+    background-color: #CFCFCF;
     border-radius: 10px;
+    width: 80px;
 }
 
 .fila{
