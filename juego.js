@@ -159,6 +159,9 @@ function crearFilaPartida(numFila){
     //console.log('TiradaActual: ' + tiradaActual);
     let aciertos = comprobarIntento(tiradaActual);
     mostrarAciertos("contenedorComprobarYaciertos"+contadorIntento, aciertos);
+    if(hasGanado(combinacion,tiradaActual)){
+        finDelJuego();
+    }
     contadorIntento++;
     
     });
@@ -238,15 +241,9 @@ function comprobarIntento(arrayTirada){
         } 
         console.log('....................................');
     }
-
-    /*
-    console.log('----------RESULTADO DE LA TIRADA----------');
-    for (let i = 0; i < tiradaAciertos.length; i++) {
-        console.log('color'+i+ ": " + tiradaAciertos[i]);
-    }
-    console.log('-------------------------');
-    */
-
     return tiradaAciertos;
+}
 
+function hasGanado(array1,array2){
+    return array1.every((valor, index) => valor ===array2[index]);
 }
