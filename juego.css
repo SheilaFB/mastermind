@@ -3,6 +3,52 @@
     padding: 0;
 }
 
+body{
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+}
+
+.titulo{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: "Anta", sans-serif;
+    font-weight: 400;
+    font-size: 180%; 
+}
+
+.titulo button {
+    margin-left: 15px;
+    width: 40px;
+    height: 40px;
+    border-radius: 5px;
+    border: none;
+}
+
+.titulo button::before {
+    content: '\21BB'; 
+    font-size: 30px;
+    font-weight: bold;
+}
+
+#botonesOpciones{
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+}
+
+#botonesOpciones button{
+    margin: 5px;
+}
+
+
+
+.contenedor{
+    display: flex;
+    justify-content: center;
+}
+
 #botonesOpciones button:active{
 border: 2px solid yellow;
 box-shadow: 0 0 10px yellow;
@@ -44,10 +90,15 @@ box-shadow: 0 0 10px yellow;
 }
 
 .fila{
-    margin: 20px;
-
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
 }
 
-.fila div {
-    margin-right: 30px;
+.fila button {
+    margin: 2px;
+}
+
+.intento{
+    margin-left: 20px;
 }

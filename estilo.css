@@ -4,31 +4,151 @@
     box-sizing: border-box;
 }
 
+body {
+    display: flex;
+    justify-content: center;
+}
+
+#decoInicio{
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+}
+  
 #decoInicio button{
-    width: 40px;
-    height: 40px;
-    border-radius: 20px;
+    margin: 5px;
+    width: 80px;
+    height: 80px;
+    border-radius: 40px;
     border-color: transparent;
+
 }
 
 #btn1{
-background-color: red;
+background-color: #ff0000;
 }
 
 #btn2{
-    background-color: greenyellow;
+    background-color: #00ff00;
 }
 
 #btn3{
-    background-color: blue;
+    background-color: #0000ff;
 }
 
 #btn4{
-    background-color: yellow;
+    background-color: #ffff00;
 }
 
-.clear {
-    clear: both;
+.titulo{
+    display: flex;
+    justify-content: center;
+    font-family: "Anta", sans-serif;
+    font-weight: 400;
+    font-size: 200%;    
+}
+
+.nivel {
+    display: flex;
+    justify-content: center;
+    margin-top: 40px;
+    margin-bottom: 40px;
+}
+
+.nivel button {
+    margin: 0 20px;
+    padding: 17px 40px;
+    border-radius: 10px;
+    border: 0;
+    background-color: #feac56; /*Color1*/
+    letter-spacing: 1.5px;
+    font-size: 15px;
+    transition: all 0.3s ease;
+    box-shadow:  #ff0101 0px 10px 0px 0px; /*Color2*/
+    color: white;
+    cursor: pointer;
+}
+
+.nivel button:hover{
+    box-shadow: #ff0101 0px 7px 0px 0px; /*Color2*/
+}
+
+.nivel button:active{
+    background-color: #feac56; /*Color1*/
+    box-shadow: #ff0101 0px 0px 0px 0px; /*Color2*/
+    transform: translateY(5px);
+    transition: 200ms;
+}
+
+.opcioneDuplicar {
+    display: flex;
+    justify-content: center;
+}
+  
+.iniciar {
+    margin-top: 40px;
+    display: flex;
+    justify-content: center;
+   
+}
+
+.iniciar button{
+    padding: 20px 40px;
+    border: none;
+    border-radius: 10px;
+    letter-spacing: 1.5px;
+    font-size: 20px;
+    color: white;
+    background: #00bfff;
+}
+
+.activo {
+    background-color: #ff6908 !important;
+}
+
+.opcioneDuplicar label {
+    display: inline-block;
+    position: relative;
+    padding-left: 25px; 
+    margin-bottom: 15px;
+    cursor: pointer;
+    font-size: 16px;
   }
   
   
+  .opcioneDuplicar input[type="checkbox"] {
+    display: none;
+  }
+  
+  
+  .checkmark {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 20px;
+    width: 20px;
+    background-color: #fff; 
+    border-radius: 3px;
+    border: 1px solid #ccc;
+  }
+  
+  
+  .checkmark::after {
+    content: '\2716'; 
+    font-size: 14px;
+    font-weight: bold;
+    color: transparent; 
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+  
+  
+  .opcioneDuplicar input[type="checkbox"]:checked + .checkmark {
+    background-color: #00ff00; 
+  }
+  
+  .opcioneDuplicar input[type="checkbox"]:checked + .checkmark::after {
+    color: #fff; 
+  }

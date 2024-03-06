@@ -3,13 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Mastermind</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Anta&display=swap" rel="stylesheet">
+
     <link rel="stylesheet" type="text/css" href="juego.css">
 </head>
 <body>
-    <h1>Juego</h1>
-    <div id="botonesOpciones"></div>
-    <div id="contenedor"></div>
+    <div class="juego">
+        <div class="titulo">
+        <h1>Mastermind</h1>
+        <button onclick="volverEmpezar()"></button>
+        </div>
+        <div id="botonesOpciones"></div>
+        <div id="contenedor"></div>
+    </div>
+   
     <script src="juego.js"></script>
 </body>
 </html>

@@ -36,14 +36,14 @@ var contadorIntento = 0;
 //boleano para partida ganada;
 var partidaGanada = false;
 
-mapColores.set(1,'#ff6961');
-mapColores.set(2,'#08cad1');
-mapColores.set(3,'#f8f38d');
-mapColores.set(4,'#42d6a4');
-mapColores.set(5,'#9d94ff');
-mapColores.set(6,'#ffb480');
-mapColores.set(7,'#c780e8');
-mapColores.set(8,'#59adf6');
+mapColores.set(1,'#FF0000');
+mapColores.set(2,'#FFA500');
+mapColores.set(3,'#FFFF00');
+mapColores.set(4,'#00FF00');
+mapColores.set(5,'#0000FF');
+mapColores.set(6,'#4B0082');
+mapColores.set(7,'#EE82EE');
+mapColores.set(8,'#FF007F');
 
 if((nivel==4||nivel==6) && (colores==6 || colores==8) && (permitirDuplicados==0 || permitirDuplicados==1)){
 crearOpciones();
@@ -122,6 +122,7 @@ function crearFilaPartida(numFila){
     fila.style.display="flex";
     contenedorBotones.id="contenedorBotones"+numFila;
     let contenedorComprobarYaciertos = document.createElement("div");
+    contenedorComprobarYaciertos.classList.add('intento');
     contenedorComprobarYaciertos.id = "contenedorComprobarYaciertos"+numFila;
     let informacionPartida = document.createElement('div');
     informacionPartida.id='info';
@@ -157,10 +158,11 @@ function crearFilaPartida(numFila){
     inicial.style.borderRadius='10px';
     
 
+    contenedor.appendChild(informacionPartida);
     contenedor.appendChild(fila);
     fila.appendChild(contenedorBotones);
     fila.appendChild(contenedorComprobarYaciertos).appendChild(inicial);
-    contenedor.appendChild(informacionPartida);
+    
 
     if (numFila==0){
         mostrarBotonComprobar('contenedorComprobarYaciertos'+contadorIntento);
@@ -177,6 +179,7 @@ function mostrarBotonComprobar(contenedorMostrarBoton){
     botonComprobar.style.width='80px';
     botonComprobar.style.borderRadius='10px';
     botonComprobar.style.border='0';
+    botonComprobar.style.margin='0px';
 
     var tiradaActual= []
 
@@ -193,11 +196,15 @@ function mostrarBotonComprobar(contenedorMostrarBoton){
     mostrarAciertos("contenedorComprobarYaciertos"+contadorIntento, aciertos);
 
     contadorIntento++;
-    if (contadorIntento<7 && !hasGanado(combinacion,tiradaActual)){
+
+    hasGanado(combinacion,tiradaActual);
+
+    if (contadorIntento<7 && !partidaGanada){
     mostrarBotonComprobar("contenedorComprobarYaciertos"+contadorIntento);
     }  
 
     if (partidaGanada){
+
         let partidaGanada = document.createElement('div');
         let felicitacion = document.createElement('h1');
         felicitacion.innerHTML='FELICIDADES, HAS GANADO';
@@ -282,6 +289,10 @@ function comprobarIntento(arrayTirada){
 }
 
 function hasGanado(array1,array2){
-    partidaGanada=true;
-    return array1.every((valor, index) => valor ===array2[index]);
+    partidaGanada = array1.every((valor, index) => valor ===array2[index]);
+    console.log('Partida ganada? ' +partidaGanada)
+}
+
+function volverEmpezar(){
+    location.reload();
 }

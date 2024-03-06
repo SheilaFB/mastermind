@@ -25,3 +25,11 @@ function empezarJuego(){
 
     window.location.href = "juego.html?niv=" + encodeURIComponent(nivel) + "&col=" + encodeURIComponent(color) + "&per=" + encodeURIComponent(permitir);
 }
+
+function pulsado(boton){
+    let botonNormal = document.getElementById('btnFacil');
+    let botonDificil = document.getElementById('btnMedio');
+    botonNormal.classList.remove('activo');
+    botonDificil.classList.remove('activo');
+    boton.classList.add('activo');
+}

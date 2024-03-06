@@ -5,35 +5,42 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="estilo.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Anta&display=swap" rel="stylesheet">
+
 </head>
 <body>
-    <div id="decoInicio">
-        <button id="btn1"></button>
-        <button id="btn2"></button>
-        <button id="btn3"></button>
-        <button id="btn4"></button>
-    </div>
-    <div class="titulo">
-        <h1>Mastermind</h1>
-    </div>
+    <div class="cont">
 
-    <div class="nivel">
-    <button id="btnFacil" onclick="seleccionarNivel(4)">Normal</button>
-    <button id="btnMedio" onclick="seleccionarNivel(6)">Difícil</button>
-    </div>
+        <div id="decoInicio">
+            <button id="btn1"></button>
+            <button id="btn2"></button>
+            <button id="btn3"></button>
+            <button id="btn4"></button>
+        </div>
 
+        <div class="titulo">
+            <h1>Mastermind</h1>
+        </div>
 
-        
-    <div class="opcioneDuplicar">
-        <label >
-        <input type="checkbox" id="cbDuplicar" checked>
-        <span>Permitir duplicados</span>
-        </label>
-    </div>
+        <div class="nivel">
+            <button class="activo" id="btnFacil" onclick="seleccionarNivel(4);pulsado(this)">Normal</button>
+            <button id="btnMedio" onclick="seleccionarNivel(6);pulsado(this)">Difícil</button>
+        </div>
     
+        <div class="opcioneDuplicar">
+            <label >
+            <input type="checkbox" id="cbDuplicar" checked>
+            <div class="checkmark"></div>
+            <span>Permitir duplicados</span>
+            </label>
+        </div>
+    
+        <div class="iniciar">
+            <button onclick="empezarJuego()">Iniciar</button>
+        </div>
 
-    <div class="iniciar">
-        <button onclick="empezarJuego()">Iniciar</button>
     </div>
 
 <script src="mastermind.js"></script>    
