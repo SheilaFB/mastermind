@@ -7,9 +7,12 @@ body{
     display: flex;
     justify-content: center;
     margin-top: 10px;
-    padding: 40px;
+    
 }
 
+.juego{
+    margin: 0 40;
+}
 .titulo{
     display: flex;
     justify-content: center;
