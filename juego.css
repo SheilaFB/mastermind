@@ -1,25 +1,23 @@
 *{
     margin: 0;
     padding: 0;
+
 }
 
 body{
     display: flex;
     justify-content: center;
     margin-top: 10px;
-    
+    padding: 40px;
 }
 
-.juego{
-    margin: 0 40;
-}
 .titulo{
     display: flex;
     justify-content: center;
     align-items: center;
     font-family: "Anta", sans-serif;
     font-weight: 400;
-    font-size: 180%; 
+    font-size: 160%; 
 }
 
 .titulo button {
@@ -45,8 +43,6 @@ body{
 #botonesOpciones button{
     margin: 5px;
 }
-
-
 
 .contenedor{
     display: flex;
