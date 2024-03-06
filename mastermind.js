@@ -21,6 +21,7 @@ function empezarJuego(){
 
     if (cb.checked){
         permitir = 1;
+        console.log('permitir')
     }
 
     window.location.href = "juego.html?niv=" + encodeURIComponent(nivel) + "&col=" + encodeURIComponent(color) + "&per=" + encodeURIComponent(permitir);
