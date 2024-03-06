@@ -45,6 +45,7 @@ mapColores.set(6,'#4B0082');
 mapColores.set(7,'#EE82EE');
 mapColores.set(8,'#FF007F');
 
+//Comprueba que los parámetros sean correctos
 if((nivel==4||nivel==6) && (colores==6 || colores==8) && (permitirDuplicados==0 || permitirDuplicados==1)){
 crearOpciones();
 crearPartida();
@@ -55,17 +56,23 @@ crearPartida();
     contenedorError.appendChild(error);
 }
 
+function componenteBoton(colorBoton){
+    let boton = document.createElement("button");
+    boton.style.backgroundColor = colorBoton;
+    boton.style.width='40px';
+    boton.style.height='40px';
+    boton.style.borderRadius="20px";
+    return boton;
+}
+
 //Método para crear los botones para escoger los colores de la tirada
 function crearOpciones(){
     let contenedorOpciones = document.getElementById("botonesOpciones");
 
+    //Recoore la lista de colores. Crea un botón de cada color
     for(let i = 1; i <= colores; i++){
-        let botonOpcion = document.createElement("button");
-        botonOpcion.style.backgroundColor = mapColores.get(i);
+        let botonOpcion = componenteBoton(mapColores.get(i));
         botonOpcion.value=i;
-        botonOpcion.style.width='40px';
-        botonOpcion.style.height='40px';
-        botonOpcion.style.borderRadius="20px";
         
         botonOpcion.addEventListener('click',function(){
             //Quitar activo
@@ -128,11 +135,7 @@ function crearFilaPartida(numFila){
     informacionPartida.id='info';
     //botones del contenedor, dependenderá del nivel
     for(let i = 0; i < nivel; i++){
-        let boton=document.createElement("button");
-        boton.style.backgroundColor = "white";
-        boton.style.width='40px';
-        boton.style.height='40px';
-        boton.style.borderRadius="20px";
+        let boton=componenteBoton('#FFFFF');
         boton.addEventListener('click',function(){
             if(colorPintar != 0){
                 boton.style.backgroundColor = mapColores.get(colorPintar);
@@ -148,7 +151,7 @@ function crearFilaPartida(numFila){
         contenedorBotones.appendChild(boton);
     }
 
-    //Contenedor contenedorComprobarYaciertos.
+    //Creamos un div para meter dentro de contenedorComprobarYaciertos. Aquí será donde pondremos el botón de comprobar y los resultados
 
     let inicial = document.createElement('div');
     

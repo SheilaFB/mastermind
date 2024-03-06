@@ -63,6 +63,9 @@ background-color: #ff0000;
     background-color: #feac56; /*Color1*/
     letter-spacing: 1.5px;
     font-size: 15px;
+    font-family: "poppins",sans-serif;
+    font-weight: 500;
+    font-style: normal;
     transition: all 0.3s ease;
     box-shadow:  #ff0101 0px 10px 0px 0px; /*Color2*/
     color: white;
@@ -98,12 +101,20 @@ background-color: #ff0000;
     border-radius: 10px;
     letter-spacing: 1.5px;
     font-size: 20px;
+    font-family: "poppins",sans-serif;
+    font-weight: 500;
+    font-style: normal;
     color: white;
     background: #00bfff;
 }
 
 .activo {
     background-color: #ff6908 !important;
+}
+
+.opcioneDuplicar{
+    display: flex;
+    align-items: center;
 }
 
 .opcioneDuplicar label {
@@ -151,4 +162,10 @@ background-color: #ff0000;
   
   .opcioneDuplicar input[type="checkbox"]:checked + .checkmark::after {
     color: #fff; 
+  }
+
+  .letra{
+    font-family: "poppins",sans-serif;
+    font-weight: 500;
+    font-style: normal;
   }
