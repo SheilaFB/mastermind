@@ -2,6 +2,8 @@ var nivel=4;
 var color=6;
 var permitir = 0;
 
+
+//Método para cambiar la dificultad al pulsar un botón.
 function seleccionarNivel(val){
     nivel=val;
     if (nivel === 4){
@@ -16,6 +18,7 @@ function seleccionarColores(color){
     console.log(color);
 }
 
+//Método del botón Iniciar. 
 function empezarJuego(){
     let cb = document.getElementById('cbDuplicar');
 

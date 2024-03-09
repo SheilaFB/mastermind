@@ -15,9 +15,6 @@ console.log('COLORES: ' + colores);
 //Número del intento
 var numIntentoParaArray = 0;
 
-//mapa con los colores
-let mapColores = new Map();
-
 //Mapa que guarda como clave el numIntento y como valor el array de la tirada
 let intentos = new Map();
 
@@ -27,7 +24,7 @@ let combinacion = crearCombinacion();
 //Al comprobar la tirada, habrá aciertos y fallos. Se guardarán en este array
 var tiradaAciertos = [];
 
-//variable para recoger el valor de un botón (se corresponde con las claves de mapColores)
+//variable para recoger el valor de un botón
 var colorPintar=0;
 
 //contadorIntento
@@ -36,14 +33,16 @@ var contadorIntento = 0;
 //boleano para partida ganada;
 var partidaGanada = false;
 
-mapColores.set(1,'#FF0000');
-mapColores.set(2,'#FFA500');
-mapColores.set(3,'#FFFF00');
-mapColores.set(4,'#00FF00');
-mapColores.set(5,'#0000FF');
-mapColores.set(6,'#4B0082');
-mapColores.set(7,'#EE82EE');
-mapColores.set(8,'#FF007F');
+const coloresJuego = {
+    1: {codigoHex: '#FF0000', nombre: 'Rojo'},
+    2: {codigoHex: '#FFA500', nombre: 'Naranja'},
+    3: {codigoHex: '#FFFF00', nombre: 'Amarillo'},
+    4: {codigoHex: '#00FF00', nombre: 'Verde'},
+    5: {codigoHex: '#0000FF', nombre: 'Azul'},
+    6: {codigoHex: '#4B0082', nombre: 'Morado'},
+    7: {codigoHex: '#EE82EE', nombre: 'Violeta'},
+    8: {codigoHex: '#FF007F', nombre: 'Rosa'}
+};
 
 //Comprueba que los parámetros sean correctos
 if((nivel==4||nivel==6) && (colores==6 || colores==8) && (permitirDuplicados==0 || permitirDuplicados==1)){
@@ -71,8 +70,9 @@ function crearOpciones(){
 
     //Recoore la lista de colores. Crea un botón de cada color
     for(let i = 1; i <= colores; i++){
-        let botonOpcion = componenteBoton(mapColores.get(i));
+        let botonOpcion = componenteBoton(coloresJuego[i].codigoHex);
         botonOpcion.value=i;
+        botonOpcion.setAttribute('aria-label',`Seleccionar color ${coloresJuego[i].nombre}`);
         
         botonOpcion.addEventListener('click',function(){
             //Quitar activo
@@ -94,14 +94,10 @@ function crearCombinacion(){
     while (comb.length!=nivel) {
         colorAleatorio = Math.floor(Math.random()*colores)+1;
         if (permitirDuplicados == 1){
-            console.log('Entra igualmente')
             comb.push(colorAleatorio); 
         } else {
             if (!comb.includes(colorAleatorio)){
-                console.log('No estoy repe')
                 comb.push(colorAleatorio); 
-            }else {
-                console.log('Estoy repe')
             }
         }
         console.log(colorAleatorio)
@@ -138,7 +134,8 @@ function crearFilaPartida(numFila){
         let boton=componenteBoton('#FFFFF');
         boton.addEventListener('click',function(){
             if(colorPintar != 0){
-                boton.style.backgroundColor = mapColores.get(colorPintar);
+                boton.style.backgroundColor = coloresJuego[colorPintar].codigoHex;
+                boton.setAttribute('aria-label',`Color ${coloresJuego[colorPintar].nombre}`);
                 boton.value=colorPintar;
                 colorPintar=0;
                 //Quitar activo
@@ -183,6 +180,7 @@ function mostrarBotonComprobar(contenedorMostrarBoton){
     botonComprobar.style.borderRadius='10px';
     botonComprobar.style.border='0';
     botonComprobar.style.margin='0px';
+    botonComprobar.setAttribute('aria-label','Botón para comprobar la combinación');
 
     var tiradaActual= []
 
@@ -199,6 +197,7 @@ function mostrarBotonComprobar(contenedorMostrarBoton){
     mostrarAciertos("contenedorComprobarYaciertos"+contadorIntento, aciertos);
 
     contadorIntento++;
+    console.log('Contador Intento ' + contadorIntento)
 
     hasGanado(combinacion,tiradaActual);
 
@@ -212,8 +211,20 @@ function mostrarBotonComprobar(contenedorMostrarBoton){
         let felicitacion = document.createElement('h1');
         felicitacion.innerHTML='FELICIDADES, HAS GANADO';
         let cont = document.getElementById('info');
+        felicitacion.setAttribute('aria-label','Felicidades, has ganado');
         cont.appendChild(partidaGanada).appendChild(felicitacion);
         
+    }
+
+    if (contadorIntento==7 && !partidaGanada){
+
+        let partidaGanada = document.createElement('div');
+        let felicitacion = document.createElement('h1');
+        felicitacion.innerHTML='Inténtalo de nuevo';
+        let cont = document.getElementById('info');
+        felicitacion.setAttribute('aria-label','Inténtalo de nuevo');
+        cont.appendChild(partidaGanada).appendChild(felicitacion);
+
     }
 
     });
@@ -222,6 +233,7 @@ function mostrarBotonComprobar(contenedorMostrarBoton){
 
 
 function mostrarAciertos(contenedorMostrarAciertos, aciertosMostrar){
+    let cadenaResultado = "";
     var contenedorActual = document.getElementById(contenedorMostrarAciertos);
     contenedorActual.innerHTML="";
     contenedorActual.classList.add('grid'+nivel,'aciertos');
@@ -234,17 +246,22 @@ function mostrarAciertos(contenedorMostrarAciertos, aciertosMostrar){
         switch(aciertosMostrar[i]){
             case 3: 
                 caja.style.backgroundColor='red';
+                cadenaResultado+=`Posicion ${i} no es correcto.`;
             break;
             case 1: 
                 caja.style.backgroundColor='green';
+                cadenaResultado+=`Posicion ${i} es correcto.`;
             break;
             case 2:
                 caja.style.backgroundColor='yellow';
+                cadenaResultado+=`Posicion ${i} está en la combinación pero no en su lugar.`;
             break;
             default:
                 caja.style.backgroundColor='white';
+                cadenaResultado+=`Posicion ${i} hay algún error. Recargue la página`;
             break;
         }
+        contenedorActual.setAttribute('aria-label',cadenaResultado);
         caja.style.width='10px';
         caja.style.height='10px';
         caja.style.borderRadius='5px';

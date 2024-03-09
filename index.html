@@ -15,10 +15,10 @@
     <div class="cont">
 
         <div id="decoInicio">
-            <button id="btn1"></button>
-            <button id="btn2"></button>
-            <button id="btn3"></button>
-            <button id="btn4"></button>
+            <button id="btn1" aria-label="Elemento decorativo"></button>
+            <button id="btn2" aria-label="Elemento decorativo"></button>
+            <button id="btn3" aria-label="Elemento decorativo"></button>
+            <button id="btn4" aria-label="Elemento decorativo"></button>
         </div>
 
         <div class="titulo">
@@ -26,19 +26,19 @@
         </div>
 
         <div class="nivel">
-            <button class="activo" id="btnFacil" onclick="seleccionarNivel(4);pulsado(this)">Normal</button>
-            <button id="btnMedio" onclick="seleccionarNivel(6);pulsado(this)">Difícil</button>
+            <button class="activo" id="btnFacil" aria-label="Botón para seleccionar nivel normal" onclick="seleccionarNivel(4);pulsado(this)">Normal</button>
+            <button id="btnMedio"  aria-label="Botón para seleccionar nivel difícil" onclick="seleccionarNivel(6);pulsado(this)">Difícil</button>
         </div>
     
         <div class="opcioneDuplicar">
            
             <input type="checkbox" id="cbDuplicar" class="mycheck">
-            <label for="cbDuplicar" class="letra">Permitir duplicados</label>     
+            <label for="cbDuplicar" class="letra" aria-label="Permitir colores duplicados">Permitir colores duplicados</label>     
           
         </div>
     
         <div class="iniciar">
-            <button onclick="empezarJuego()">Iniciar</button>
+            <button aria-label="botón para iniciar el juego" onclick="empezarJuego()">Iniciar</button>
         </div>
 
     </div>
