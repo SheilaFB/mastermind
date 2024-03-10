@@ -13,11 +13,6 @@ function seleccionarNivel(val){
     }
 }
 
-function seleccionarColores(color){
-    self.color=color;
-    console.log(color);
-}
-
 //Método del botón Iniciar. 
 function empezarJuego(){
     let cb = document.getElementById('cbDuplicar');
