@@ -30,6 +30,7 @@ function empezarJuego(){
     window.location.href = "juego.html?niv=" + encodeURIComponent(nivel) + "&col=" + encodeURIComponent(color) + "&per=" + encodeURIComponent(permitir);
 }
 
+//Cambia el estilo del botón pulsado
 function pulsado(boton){
     let botonNormal = document.getElementById('btnFacil');
     let botonDificil = document.getElementById('btnMedio');
