@@ -1,5 +1,4 @@
-//NECESITO CREAR UN CONTADOR DE INTENTOS. CON ESTE CONTADOR ACCEDO A FILA NO MÉTODO COMPROBAR
-
+//Comprueba que los valores sean válidos
 var recibirParametros = new URLSearchParams(window.location.search);
 if(recibirParametros.get('niv')==null) {
    var nivel = 4;
@@ -33,6 +32,7 @@ var contadorIntento = 0;
 //boleano para partida ganada;
 var partidaGanada = false;
 
+//Colores del juego
 const coloresJuego = {
     1: {codigoHex: '#FF0000', nombre: 'Rojo'},
     2: {codigoHex: '#FFA500', nombre: 'Naranja'},
@@ -44,7 +44,7 @@ const coloresJuego = {
     8: {codigoHex: '#FF007F', nombre: 'Rosa'}
 };
 
-//Comprueba que los parámetros sean correctos
+//Comprueba que los parámetros sean correctos para evitar errores
 if((nivel==4||nivel==6) && (colores==6 || colores==8) && (permitirDuplicados==0 || permitirDuplicados==1)){
 crearOpciones();
 crearPartida();
@@ -55,6 +55,7 @@ crearPartida();
     contenedorError.appendChild(error);
 }
 
+//funcion para crear un botón con el color pasado por parámetro
 function componenteBoton(colorBoton){
     let boton = document.createElement("button");
     boton.style.backgroundColor = colorBoton;
@@ -74,6 +75,7 @@ function crearOpciones(){
         botonOpcion.value=i;
         botonOpcion.setAttribute('aria-label',`Seleccionar color ${coloresJuego[i].nombre}`);
         
+        //Cuando se pulsa un botón cambia el estilo para remarcar cual ha sido pulsado
         botonOpcion.addEventListener('click',function(){
             //Quitar activo
             var botonesIterar = document.getElementById('botonesOpciones').getElementsByTagName('button');
@@ -124,21 +126,28 @@ function crearFilaPartida(numFila){
     fila.classList.add("fila");
     fila.style.display="flex";
     contenedorBotones.id="contenedorBotones"+numFila;
+
+    //Contenedor del botón de comprobar y de los aciertos
     let contenedorComprobarYaciertos = document.createElement("div");
     contenedorComprobarYaciertos.classList.add('intento');
     contenedorComprobarYaciertos.id = "contenedorComprobarYaciertos"+numFila;
+
+    //Contenedor para mostrar si ha ganado o perdido la partida
     let informacionPartida = document.createElement('div');
     informacionPartida.id='info';
-    //botones del contenedor, dependenderá del nivel
+
+    //crea los botones del contenedor, dependenderá del nivel (4 o 6 botones)
     for(let i = 0; i < nivel; i++){
         let boton=componenteBoton('#FFFFF');
+
+        //Pinta el botón con el color seleccionado y añade el valor
         boton.addEventListener('click',function(){
             if(colorPintar != 0){
                 boton.style.backgroundColor = coloresJuego[colorPintar].codigoHex;
                 boton.setAttribute('aria-label',`Color ${coloresJuego[colorPintar].nombre}`);
                 boton.value=colorPintar;
                 colorPintar=0;
-                //Quitar activo
+                //Quita el estilo activo del color seleccionado previamente
                 var botonesIterar = document.getElementById('botonesOpciones').getElementsByTagName('button');
                 for (var i = 0; i < botonesIterar.length; i++) {
                 botonesIterar[i].classList.remove('activo');
@@ -163,16 +172,20 @@ function crearFilaPartida(numFila){
     fila.appendChild(contenedorBotones);
     fila.appendChild(contenedorComprobarYaciertos).appendChild(inicial);
     
-
+    //Al iniciar el juego, se muestra en la primera fila el botón comprobar
     if (numFila==0){
         mostrarBotonComprobar('contenedorComprobarYaciertos'+contadorIntento);
     }
 }
 
+//función para mostrar el botón comprobar
 function mostrarBotonComprobar(contenedorMostrarBoton){
     console.log(contenedorMostrarBoton);
     var contenedorActual = document.getElementById(contenedorMostrarBoton);
+    //Limpiamos el contenedor
     contenedorActual.innerHTML="";
+
+    //Creamos el botón
     let botonComprobar = document.createElement("button");
     botonComprobar.innerHTML="Comprobar"
     botonComprobar.style.height='100%';
@@ -182,9 +195,10 @@ function mostrarBotonComprobar(contenedorMostrarBoton){
     botonComprobar.style.margin='0px';
     botonComprobar.setAttribute('aria-label','Botón para comprobar la combinación');
 
+    //creamos un array para guardar la combinación propuesta
     var tiradaActual= []
 
-    //FUNCION DEL BOTÓN COMPROBAR
+    //Recogemos los valores de la combinación y los guardamos en el array
 
     botonComprobar.addEventListener('click',function(){
 
@@ -192,53 +206,55 @@ function mostrarBotonComprobar(contenedorMostrarBoton){
     for (var i = 0; i < botonesValores.length; i++) {
         tiradaActual.push(parseInt(botonesValores[i].value));
     }
-    //console.log('TiradaActual: ' + tiradaActual);
+    
+    //Comprueba los aciertos y errores
     let aciertos = comprobarIntento(tiradaActual);
     mostrarAciertos("contenedorComprobarYaciertos"+contadorIntento, aciertos);
 
     contadorIntento++;
     console.log('Contador Intento ' + contadorIntento)
 
+    //Llama al método para comprobar si ha ganado
     hasGanado(combinacion,tiradaActual);
 
+    //Si aún quedan intentos y no ha ganado, se añade el botón comprobar a la siguiente fila de intento
     if (contadorIntento<7 && !partidaGanada){
     mostrarBotonComprobar("contenedorComprobarYaciertos"+contadorIntento);
     }  
 
-    if (partidaGanada){
-
-        let partidaGanada = document.createElement('div');
-        let felicitacion = document.createElement('h1');
-        felicitacion.innerHTML='FELICIDADES, HAS GANADO';
-        let cont = document.getElementById('info');
-        felicitacion.setAttribute('aria-label','Felicidades, has ganado');
-        cont.appendChild(partidaGanada).appendChild(felicitacion);
-        
+    //Contenedor para mostrar si ha ganado o perdido. Lo añade como hijo del contenedor "info" creado anteriormente
+    let resultadoPartidaDiv = document.createElement('div');
+    let mensaje = document.createElement('h1');
+    let cont = document.getElementById('info');
+    
+    //Si ha ganado, muestra el mensaje correspondiente
+    if (partidaGanada){   
+        mensaje.innerHTML='¡Has ganado!';
+        mensaje.setAttribute('aria-label','Felicidades, has ganado');    
     }
 
+    //Si ha perdido, muestra el mensaje correspondiente
     if (contadorIntento==7 && !partidaGanada){
-
-        let partidaGanada = document.createElement('div');
-        let felicitacion = document.createElement('h1');
-        felicitacion.innerHTML='Inténtalo de nuevo';
-        let cont = document.getElementById('info');
-        felicitacion.setAttribute('aria-label','Inténtalo de nuevo');
-        cont.appendChild(partidaGanada).appendChild(felicitacion);
-
+        mensaje.innerHTML='Inténtalo de nuevo';
+        mensaje.setAttribute('aria-label','Inténtalo de nuevo');
     }
-
+    cont.appendChild(resultadoPartidaDiv).appendChild(mensaje);   
     });
     contenedorActual.appendChild(botonComprobar);
 }
 
-
+//Muestra los aciertos y fallos. Recibe el contenedor donde los mostrará y el array que contiene el resultado de la función "comprobarIntento()"
 function mostrarAciertos(contenedorMostrarAciertos, aciertosMostrar){
+
+    //Creamos una cadena de texto con el resultado para el aria-label
     let cadenaResultado = "";
+
+    //Seleccionamos el contenedor donde mostraremos los resultados
     var contenedorActual = document.getElementById(contenedorMostrarAciertos);
     contenedorActual.innerHTML="";
     contenedorActual.classList.add('grid'+nivel,'aciertos');
     
-    
+    //Creamos el div donde añadiremos círculos de colores en función de si ha acertado o no
     var caja = document.createElement('div');
 
     for(let i = 0; i<nivel; i++){
@@ -273,22 +289,14 @@ function mostrarAciertos(contenedorMostrarAciertos, aciertosMostrar){
 
 //recibe un array con la combinación de colores seleccionada. Crea un nuevo array para guardar si está en la combinación correcta o no.
 function comprobarIntento(arrayTirada){
-    //console.log('Array que recibo de tirada actual ' + arrayTirada)
-    //console.log('Combinación a adivinar ' + combinacion)
+
     tiradaAciertos=[];
     numIntentoParaArray++;
     intentos.set(numIntentoParaArray,arrayTirada);
-    //console.log('Numero intento ' + intentos.size);
-
-    for (let i = 0; i < nivel; i++) {
-        console.log('..............POSICION' + i +'..............');
-        //console.log('Combinación: ' + combinacion[i])
-        //console.log('ArrayTirada: ' + arrayTirada[i])
-        numero=arrayTirada[i];
-        //console.log(combinacion);
     
+    for (let i = 0; i < nivel; i++) {
+        numero=arrayTirada[i];
         if(combinacion.includes(numero)){ 
-            console.log('Está en la combiacion')
 
             if(combinacion[i] === arrayTirada[i]){
                 console.log('Y además has acertado')
@@ -300,19 +308,20 @@ function comprobarIntento(arrayTirada){
             }
         }else {
             console.log('No está en la combinación')
-            //No está en la combinación
+            //3 -> No está en la combinación
             tiradaAciertos.push(3);
         } 
-        console.log('....................................');
+        
     }
     return tiradaAciertos;
 }
 
+//Función para comprobar si ha ganado. Guarda el resultado en una variable.
 function hasGanado(array1,array2){
     partidaGanada = array1.every((valor, index) => valor ===array2[index]);
-    console.log('Partida ganada? ' +partidaGanada)
 }
 
+//Función para recargar la página 
 function volverEmpezar(){
     location.reload();
 }
